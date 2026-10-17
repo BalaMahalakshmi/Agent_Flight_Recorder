@@ -23,8 +23,22 @@ def _fallback_step(run: dict[str, Any]) -> tuple[int, str]:
             isinstance(step, dict)
             and "delete" in str(step.get("name", "")).casefold()
         ):
+            for previous_position in range(position - 1, -1, -1):
+                previous_step = steps[previous_position]
+                if (
+                    isinstance(previous_step, dict)
+                    and previous_step.get("kind") == "llm"
+                ):
+                    index = previous_step.get("index", previous_position)
+                    return index, (
+                        "the model deleted without verifying the target first; "
+                        "replay from this LLM step"
+                    )
             index = step.get("index", position)
-            return index, "the model deleted without verifying the target first"
+            return index, (
+                "the model deleted without verifying the target first; "
+                "no earlier LLM step is available to replay"
+            )
 
     position = max(len(steps) - 1, 0)
     step = steps[position] if steps else {}

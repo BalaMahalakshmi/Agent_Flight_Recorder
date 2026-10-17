@@ -140,18 +140,18 @@ def run_tool(name: str, args: dict[str, Any]) -> dict[str, Any]:
 
 def agent_loop(messages: list[dict[str, Any]], system: str) -> str:
     """Continue a conversation until the model returns a final text answer."""
-    conversation = list(messages)
+    messages = list(messages)
 
     for _ in range(_MAX_TURNS):
-        response = llm_call(conversation, system)
+        response = llm_call(messages, system)
         content = response["content"]
         if isinstance(content, str):
-            conversation.append({"role": "assistant", "content": content})
+            messages = messages + [{"role": "assistant", "content": content}]
             return content
         if not isinstance(content, list):
             raise TypeError("LLM content must be text or a list of content blocks.")
 
-        conversation.append({"role": "assistant", "content": content})
+        messages = messages + [{"role": "assistant", "content": content}]
         tool_uses = [
             block for block in content
             if isinstance(block, dict) and block.get("type") == "tool_use"
@@ -178,6 +178,6 @@ def agent_loop(messages: list[dict[str, Any]], system: str) -> str:
                     "content": json.dumps(result, ensure_ascii=False),
                 }
             )
-        conversation.append({"role": "user", "content": results})
+        messages = messages + [{"role": "user", "content": results}]
 
     raise RuntimeError(f"Agent did not finish after {_MAX_TURNS} LLM calls.")

@@ -104,7 +104,7 @@ def replay_run(run_id: str, request: ReplayRequest) -> dict[str, Any]:
     reset_db()
     with Recorder(
         run.get("name", "replay"),
-        input={"messages": messages, "system": system},
+        input=run.get("input"),
         on_finish=db.save_run,
         initial_steps=inherited_steps,
         parent_run_id=run_id,

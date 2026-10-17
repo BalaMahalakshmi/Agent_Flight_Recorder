@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import contextvars
+import copy
 import json
 import time
 import urllib.request
@@ -85,26 +86,28 @@ def record_step(kind: str) -> Callable[[F], F]:
         if asyncio.iscoroutinefunction(func):
             @wraps(func)
             async def async_wrapper(*args: Any, **kwargs: Any) -> Any:
+                saved_args, saved_kwargs = copy.deepcopy((args, kwargs))
                 started_at = time.perf_counter()
                 try:
                     output = await func(*args, **kwargs)
                 except Exception as exc:
-                    record(args, kwargs, None, started_at, str(exc))
+                    record(saved_args, saved_kwargs, None, started_at, str(exc))
                     raise
-                record(args, kwargs, output, started_at)
+                record(saved_args, saved_kwargs, output, started_at)
                 return output
 
             return async_wrapper  # type: ignore[return-value]
 
         @wraps(func)
         def wrapper(*args: Any, **kwargs: Any) -> Any:
+            saved_args, saved_kwargs = copy.deepcopy((args, kwargs))
             started_at = time.perf_counter()
             try:
                 output = func(*args, **kwargs)
             except Exception as exc:
-                record(args, kwargs, None, started_at, str(exc))
+                record(saved_args, saved_kwargs, None, started_at, str(exc))
                 raise
-            record(args, kwargs, output, started_at)
+            record(saved_args, saved_kwargs, output, started_at)
             return output
 
         return wrapper  # type: ignore[return-value]
