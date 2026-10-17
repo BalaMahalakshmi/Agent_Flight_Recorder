@@ -25,7 +25,8 @@ body {
 }
 
 button,
-textarea {
+textarea,
+input {
   font: inherit;
 }
 
@@ -36,7 +37,9 @@ a {
 
 button:focus-visible,
 a:focus-visible,
-textarea:focus-visible {
+textarea:focus-visible,
+input:focus-visible,
+summary:focus-visible {
   outline: 3px solid #287cc1;
   outline-offset: 3px;
 }
@@ -141,6 +144,11 @@ textarea:focus-visible {
   gap: 7px;
   color: #acb7bf;
   font-size: 11px;
+}
+
+.run-created {
+  color: #9eabb4;
+  font-size: 10px;
 }
 
 .run-cost {
@@ -270,6 +278,230 @@ textarea:focus-visible {
 
 .button-primary:hover:not(:disabled) {
   background: #1e594a;
+}
+
+.comparison-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: -11px 0 18px;
+}
+
+.comparison-view {
+  margin-bottom: 28px;
+  padding: 19px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fbfcfd;
+}
+
+.comparison-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.comparison-heading .eyebrow {
+  margin: 0 0 4px;
+}
+
+.comparison-heading h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.outcome-banner {
+  margin-bottom: 12px;
+  padding: 12px 14px;
+  border: 1px solid #e5bd78;
+  border-radius: 8px;
+  background: #fff7e9;
+  color: #704818;
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.prompt-diff {
+  margin-bottom: 12px;
+  padding: 13px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+}
+
+.prompt-diff > .section-label,
+.user-message-diff .section-label {
+  margin: 0 0 8px;
+}
+
+.prompt-unchanged,
+.diff-text {
+  margin: 0;
+  color: #46515a;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 11px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.diff-removed {
+  border-radius: 2px;
+  background: #ffeded;
+  color: #a33e3e;
+}
+
+.diff-added {
+  border-radius: 2px;
+  background: #e6f5eb;
+  color: #216b3b;
+}
+
+.user-message-diff {
+  margin-top: 12px;
+  padding-top: 11px;
+  border-top: 1px solid var(--line);
+}
+
+.comparison-answers,
+.comparison-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.comparison-answer,
+.comparison-column {
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+}
+
+.comparison-answer .section-label {
+  margin: 0 0 8px;
+}
+
+.comparison-answer .answer-text {
+  max-height: 180px;
+  overflow: auto;
+}
+
+.comparison-costs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin: 12px 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+}
+
+.comparison-costs > div {
+  display: grid;
+  gap: 3px;
+}
+
+.comparison-costs .section-label {
+  font-size: 9px;
+}
+
+.comparison-costs strong {
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 11px;
+}
+
+.comparison-note {
+  margin: 0 0 12px;
+  color: #9a5425;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.comparison-column h4 {
+  margin: 0 0 10px;
+  color: #35414b;
+  font-size: 13px;
+}
+
+.comparison-step-list {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.comparison-step {
+  min-width: 0;
+  padding: 9px 10px;
+  border: 1px solid #e7eaed;
+  border-radius: 7px;
+  background: #fbfcfd;
+  overflow-wrap: anywhere;
+}
+
+.comparison-step.different {
+  border-color: #d99a4b;
+  background: #fff7e9;
+  box-shadow: inset 3px 0 #d99a4b;
+}
+
+.comparison-step-title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 10px;
+}
+
+.comparison-step-title > span:first-child {
+  color: #7c8790;
+  font-family: Consolas, "Courier New", monospace;
+}
+
+.comparison-step-title strong {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.comparison-step-title > span:last-child {
+  flex-shrink: 0;
+  color: var(--muted);
+  font-family: Consolas, "Courier New", monospace;
+}
+
+.comparison-step-title .changed-badge {
+  flex: 0 0 auto;
+  padding: 2px 5px;
+  border-radius: 8px;
+  background: #fff0d5;
+  color: #92581b;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.comparison-step p {
+  margin: 6px 0 0;
+  color: #57636c;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 10px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.comparison-missing {
+  color: #87919a;
+  font-size: 10px;
+  font-style: italic;
 }
 
 .summary-grid {
@@ -497,6 +729,16 @@ textarea:focus-visible {
   font-size: 9px;
 }
 
+.replay-marker {
+  flex-shrink: 0;
+  padding: 2px 5px;
+  border-radius: 5px;
+  background: #e4f3ee;
+  color: #247a63;
+  font-size: 9px;
+  font-weight: 600;
+}
+
 .step-inspector {
   display: grid;
   gap: 13px;
@@ -573,6 +815,37 @@ textarea:focus-visible {
   font-family: Consolas, "Courier New", monospace;
   font-size: 11px;
   line-height: 1.5;
+}
+
+.replay-panel input {
+  width: 100%;
+  min-height: 38px;
+  padding: 9px 10px;
+  border: 1px solid #d6dde2;
+  border-radius: 7px;
+  background: white;
+  color: #303b44;
+  font-size: 11px;
+}
+
+.advanced-prompt {
+  display: grid;
+  gap: 9px;
+}
+
+.advanced-prompt summary {
+  width: fit-content;
+  color: #46515a;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.advanced-prompt[open] {
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #fafbfc;
 }
 
 .replay-panel .button {
@@ -698,6 +971,19 @@ textarea:focus-visible {
 
   .summary-grid {
     grid-template-columns: 1fr;
+  }
+
+  .comparison-view {
+    padding: 14px;
+  }
+
+  .comparison-answers,
+  .comparison-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-heading {
+    align-items: flex-start;
   }
 
   .run-header {
