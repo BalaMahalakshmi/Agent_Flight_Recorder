@@ -1,5 +1,7 @@
 """Run the duplicate-customer demo with flight recording enabled."""
 
+import os
+
 from flight_recorder import Recorder
 
 from .agent import agent_loop
@@ -13,7 +15,13 @@ def main() -> None:
     ]
     system = "You are a helpful customer support assistant."
 
-    with Recorder("duplicate-customer-demo", input={"messages": messages}) as recorder:
+    with Recorder(
+        "duplicate-customer-demo",
+        input={"messages": messages},
+        backend_url=os.environ.get(
+            "FR_BACKEND_URL", "http://localhost:8000"
+        ),
+    ) as recorder:
         answer = agent_loop(messages, system)
         recorder.output = answer
 
